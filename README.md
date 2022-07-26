@@ -5,8 +5,8 @@ Expands bitbake variables in externel source/scripts.
 * delimited bitbake variables in external source/scripts will be replaced with the expanded value of that bitbake variable
   * Example: ``@@sbindir@@`` will be replaced with ``/usr/sbin``
 * delimiter defaults to ``@@``. This can be overriden with the variable ``BITBAKE_VAR_SUB_DELIM``
-* files in ``FILES_${PN}`` are expanded automatically, during ``do_install_append()``
-* files in ``SRC_URI``     are expanded automatically, during ``do_compile_prepend()``
+* files in ``FILES_${PN}`` are expanded automatically, during ``do_install:append()``
+* files in ``SRC_URI``     are expanded automatically, during ``do_compile:prepend()``
 * any file can be processed with an explict function call
 * see [Using Layer](#Using-Layer) for more info
 

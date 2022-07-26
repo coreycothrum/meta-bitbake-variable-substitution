@@ -2,7 +2,7 @@ def bitbake_variables_search_and_sub_all_FILES_PN(d):
   delim      = d.getVar("BITBAKE_VAR_SUB_DELIM")
   deploy_dir = d.getVar("D")
   pn         = d.getVar("PN")
-  files      = d.getVar("FILES_" + pn).split()
+  files      = d.getVar("FILES:" + pn).split()
 
   if not deploy_dir:
     bb.warn("no deploy_dir, skipping")
