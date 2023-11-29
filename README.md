@@ -60,3 +60,6 @@ Please submit any patches against this layer via pull request.
 Commits must be signed off.
 
 Use [conventional commits](https://www.conventionalcommits.org/).
+
+## Release Schedule and Roadmap
+This layer will remain compatible with the latest [YOCTO LTS](https://wiki.yoctoproject.org/wiki/Releases).
