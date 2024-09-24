@@ -33,7 +33,7 @@ def bitbake_variables_search_and_sub(paths, delim, d):
   elif isinstance(paths, str ): paths = [paths]
   else                        : bb.fatal("path(s) must be a string or list of strings")
 
-  if len(d.getVar("BB_HASH_CODEPARSER_VALS").strip()) != 0:
+  if len((d.getVar("BB_HASH_CODEPARSER_VALS") or "").strip()) != 0:
       bb.fatal("BB_HASH_CODEPARSER_VALS is incompatible with this layer. unset this variable to continue.")
 
   import filecmp
