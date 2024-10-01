@@ -1,5 +1,5 @@
 # meta-bitbake-variable-substitution
-Expands bitbake variables in externel source/scripts.
+Expands bitbake variables in external source/scripts.
 
 ## Overview
 * delimited bitbake variables in external source/scripts will be replaced with the expanded value of that bitbake variable
@@ -36,12 +36,11 @@ Alternatively, run bitbake-layers to add:
 
     $ bitbake-layers add-layer /path/to/yocto/meta-bitbake-variable-substitution
 
-### Configure Layer
-This layer should be configured with the following definitions
-in ``local.conf`` or ``custom_machine.conf``:
-
-    ##optional, if different delim needed
-    #BITBAKE_VAR_SUB_DELIM = "@@"
+### Configuration
+| Variable                              | Default | Description                                                                                      |
+| ---                                   | ---     | ---                                                                                              |
+| ``BITBAKE_VAR_SUB_DELIM``             | ``@@``  | strings sandwiched between this delim will be replaced w/ value of bitbake variable of same name | 
+| ``BITBAKE_VAR_SUB_MISSING_VAR_FATAL`` | ``1``   | missing bitbake variables will be a fatal error                                                  |
 
 ## Using Layer
 To automatically process files, add ``inherit bitbake-variable-substitution`` to recipe.
@@ -53,13 +52,6 @@ Alternatively, a more measured approach may be preferred, especially if `FILES_$
 
     # call function where appropriate
     ${@bitbake_variables_search_and_sub("${PATH_OR_FILE_TO_PROCESS}", r"${BITBAKE_VAR_SUB_DELIM}", d)}
-
-## Contributing
-Please submit any patches against this layer via pull request.
-
-Commits must be signed off.
-
-Use [conventional commits](https://www.conventionalcommits.org/).
 
 ## Release Schedule and Roadmap
 This layer will remain compatible with the latest [YOCTO LTS](https://wiki.yoctoproject.org/wiki/Releases).

@@ -59,10 +59,14 @@ def bitbake_variables_search_and_sub(paths, delim, d):
             obuf = []
             for line in fp:
               for match in regex.findall(line):
-                if not d.getVar(match):
-                  bb.warn('{file}: {var} is not a known bitbake variable, not expanding'.format(file=file, var=match))
-                else:
-                  line = line.replace(delim + match + delim, d.getVar(match))
+                new_val = d.getVar(match)
+                if new_val is None:
+                    if d.getVar("BITBAKE_VAR_SUB_MISSING_VAR_FATAL", "1") == "1":
+                        bb.fatal('{file}: bitbake variable {var} is None'.format(file=file, var=match))
+                    else:
+                        bb.warn('{file}: bitbake variable {var} is None, expanding to empty string'.format(file=file, var=match))
+                        new_val = ''
+                line = line.replace(delim + match + delim, new_val)
 
               obuf.append(line)
 
