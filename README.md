@@ -1,51 +1,27 @@
 # meta-bitbake-variable-substitution
-Expands bitbake variables in external source/scripts.
+Automatically expand bitbake variables inside source/scripts.
 
 ## Overview
-* delimited bitbake variables in external source/scripts will be replaced with the expanded value of that bitbake variable
+* delimited bitbake variables in source/scripts will be replaced with the expanded value of that bitbake variable
   * Example: ``@@sbindir@@`` will be replaced with ``/usr/sbin``
-* delimiter defaults to ``@@``. This can be overriden with the variable ``BITBAKE_VAR_SUB_DELIM``
 * files in ``FILES_${PN}`` are expanded automatically, during ``do_install:append()``
-* files in ``SRC_URI``     are expanded automatically, during ``do_compile:prepend()``
-* any file can be processed with an explict function call
-* see [Using Layer](#Using-Layer) for more info
+* files in ``SRC_URI``     are expanded automatically, during ``do_patch:append()``
+* any file can be processed with an explict function call inside bitbake recipe
 
-## Dependencies
-This layer depends on:
-
-    URI: git://git.openembedded.org/bitbake
-
-    URI: git://git.openembedded.org/openembedded-core
-    layers: meta
-    branch: master
-
-## Installation
-### Add Layer to Build
-In order to use this layer, the build system must be aware of it.
-
-Assuming this layer exists at the top-level of the yocto build tree; add the location of this layer to ``bblayers.conf``, along with any additional layers needed:
-
-    BBLAYERS ?= "                                       \
-      /path/to/yocto/meta                               \
-      /path/to/yocto/meta-poky                          \
-      /path/to/yocto/meta-yocto-bsp                     \
-      /path/to/yocto/meta-bitbake-variable-substitution \
-      "
-
-Alternatively, run bitbake-layers to add:
-
-    $ bitbake-layers add-layer /path/to/yocto/meta-bitbake-variable-substitution
-
-### Configuration
+## Configuration
 | Variable                              | Default | Description                                                                                      |
 | ---                                   | ---     | ---                                                                                              |
 | ``BITBAKE_VAR_SUB_DELIM``             | ``@@``  | strings sandwiched between this delim will be replaced w/ value of bitbake variable of same name | 
-| ``BITBAKE_VAR_SUB_MISSING_VAR_FATAL`` | ``1``   | missing bitbake variables will be a fatal error                                                  |
+| ``BITBAKE_VAR_SUB_MISSING_VAR_FATAL`` | ``1``   | missing bitbake variables will cause a fatal error                                               |
 
-## Using Layer
+## Usage
+### Automatic Expansion
 To automatically process files, add ``inherit bitbake-variable-substitution`` to recipe.
 
-Alternatively, a more measured approach may be preferred, especially if `FILES_${PN}` or `SRC_URI` is trashy/bloated. To explicitly/manually select files to process:
+### Explicit Expansion
+Alternatively, a more measured approach may be preferred. Especially useful if `FILES_${PN}` or `SRC_URI` is trashy/bloated.
+
+To explicitly/manually select files to process:
 
     # inherit helpers class in recipe
     inherit bitbake-variable-substitution-helpers
