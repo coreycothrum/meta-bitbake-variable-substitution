@@ -10,7 +10,7 @@ def bitbake_variables_search_and_sub_all_FILES_PN(d):
 
   if files:
     for file in files.split():
-      bitbake_variables_search_and_sub(os.path.join(deploy_dir, file), delim, d)
+      bitbake_variables_search_and_sub(os.path.join(deploy_dir, *file.split(os.sep)), delim, d)
 
   return "true"
 
